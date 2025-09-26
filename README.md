@@ -3,11 +3,11 @@
 
 <body>
     <header>
-        <h1>Omni Bot</h1>
+        <h1><b>Omni Bot</b></h1>
     </header>
 <section>
     <h2>What is Omni Bot?</h2>
-    <p>Omni Bot is an all around Bot offering features similar to other bots but far more refined</p>
+    <p>Omni Bot is an all around Discord Bot offering features similar to other bots but far more Refined</p>
 </section>
 <section>
     <h2>Developers:</h2>
