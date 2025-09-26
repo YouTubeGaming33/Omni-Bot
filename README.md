@@ -1,7 +1,8 @@
-# Omni Bot
-Omni Bot - a Discord Bot for all your Servers Needs!
+<!DOCTYPE html>
+<html lang="en">
 
-# Developers
-The developers of this project are:
-    - YoutubeGaming33 (backend and database)
-    - Jamswert ()
+<body>
+    <header>
+        <h1>Omni Bot</h1>
+    </header>
+</body>
