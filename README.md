@@ -3,7 +3,7 @@
 
 <body>
     <header>
-        <h1>Omni Bot<h1>
+        Omni Bot
     </header>
 <section>
     <h2>What is Omni Bot?</h2>
