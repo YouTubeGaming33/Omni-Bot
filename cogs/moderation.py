@@ -27,6 +27,7 @@ class Moderation(commands.Cog):
         await interaction.response.send_message(f"You have kicked **{member.mention} [ID = {member.id}, display name = {member.display_name}]** for **{reason}**", ephemeral=True)
         # Add the logging functionality when it is available.
         # possibly create a case code and then call the listener
+        self.bot.dispatch("moderation", interaction=interaction, target=member, action="Kick", reason=reason)
 
     @moderation.command(name="ban", description="Bans a user from the server")
     async def ban(self, interaction: discord.Interaction, member: discord.Member, reason: str):
@@ -43,9 +44,9 @@ class Moderation(commands.Cog):
         await member.send(f"You have been **banned** from **{interaction.guild}** for **{reason}**")
         await member.ban(reason= reason or None)
         await interaction.response.send_message(f"You have banned **{member.mention} [ID = {member.id}, display name = {member.display_name}]** for **{reason}**", ephemeral=True)
-        
         # Add the logging functionality when it is available.
         # possibly create a case code and then call the listener.
+        self.bot.dispatch("moderation", interaction=interaction, target=member, action="Ban", reason=reason)
 
     @moderation.command(name="unban", description="Unbans the specified user.")
     async def unban(self, interaction: discord.Interaction, user_id: str):
@@ -53,16 +54,14 @@ class Moderation(commands.Cog):
         Parameters:
             -   user_id: str - The id of the member that is going to be unbanned.
         """
-        if not interaction.user.guild_permissions.ban_members:
-            await interaction.response.send_message("You may not use this command as you do not have the required permissions.", ephemeral=True)
-            return
-        
-        user= await self.bot.fetch_user(user_id)
-        await interaction.guild.unban(user)
-        await user.send(f"You have been **unbanned** from {interaction.guild}")
-        await interaction.response.send_message(f"You have banned **{user.mention} [ID = {user.id}, display name = {user.display_name}]**", ephemeral=True)
-        # Add the logging functionality when it is available.
-        # possibly create a case code and then call the listener.
+        if interaction.user.guild_permissions.ban_members:
+            user= await self.bot.fetch_user(user_id)
+            await interaction.guild.unban(user)
+            await interaction.response.send_message(f"Success! You have unbanned the user: {user.name}", ephemeral=True)
+        else:
+            await interaction.response.send_message("🚫 You do not have Permission to Moderate Members.", ephemeral=True)
+       
+        self.bot.dispatch("moderation", interaction=interaction, target=user, action="Unban", reason="")
         
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
